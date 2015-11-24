@@ -96,7 +96,7 @@ AM_CONDITIONAL(LSAN_SUPPORTED, [test "x$LSAN_SUPPORTED" = "xyes"])
 AC_CHECK_FUNCS(clock_getres clock_gettime clock_settime)
 
 # Common libraries that we need to link against for all sanitizer libs.
-link_sanitizer_common='-lpthread -ldl -lm'
+link_sanitizer_common='-lpthread -lm'
 
 # At least for glibc, shm_open is in librt.  But don't pull that
 # in if it still doesn't give us the function we want.  This
@@ -128,6 +128,12 @@ AC_CHECK_LIB(rt, clock_gettime,
   [link_libasan="-lrt $link_libasan"
 link_libtsan="-lrt $link_libtsan"
 # Other sanitizers do not override clock_* API
+])
+
+# Do a configure time check for -ldl
+AC_CHECK_LIB(dl, dlsym,
+    [link_libasan="-ldl $link_libasan"
+link_libtsan="-ldl $link_libtsan"
 ])
 
 case "$host" in
