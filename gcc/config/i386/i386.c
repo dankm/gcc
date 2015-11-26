@@ -7312,9 +7312,10 @@ ix86_legitimate_combined_insn (rtx_insn *insn)
 static unsigned HOST_WIDE_INT
 ix86_asan_shadow_offset (void)
 {
-  return TARGET_LP64 ? (TARGET_MACHO ? (HOST_WIDE_INT_1 << 44)
-				     : HOST_WIDE_INT_C (0x7fff8000))
-		     : (HOST_WIDE_INT_1 << 29);
+  /* these offset values are target specific. 46 and 30 are the values
+   * for FreeBSD, and the values for Linux are 44 and 29. */
+  return TARGET_LP64 ? (HOST_WIDE_INT_1 << 46)
+				     : (HOST_WIDE_INT_1 << 30);
 }
 
 /* Argument support functions.  */
