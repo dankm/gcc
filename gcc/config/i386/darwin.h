@@ -295,3 +295,8 @@ do {								\
     = darwin_init_cfstring_builtins ((unsigned) (IX86_BUILTIN_CFSTRING));	\
   darwin_rename_builtins ();					\
 } while(0)
+
+/* Define the shadow offset for asan.  */
+#undef SUBTARGET_SHADOW_OFFSET_64
+#define SUBTARGET_SHADOW_OFFSET_64  (HOST_WIDE_INT_1 << 44)
+
